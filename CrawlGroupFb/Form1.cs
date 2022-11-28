@@ -27,14 +27,17 @@ namespace CrawlGroupFb
         {
             int delay = Int32.Parse(textBoxDelay.Text);
             string[] keyWords = richTextBox1.Lines.ToArray();
+            Account account = new Account();
+            account.U = textBox1.Text;
+            account.P = textBox2.Text;
+            account.F = textBox3.Text;
+
+
             new Thread(() =>
             {
                 try
                 {
-                    Account account = new Account();
-                    account.U = "quanganh12102k2@gmail.com";
-                    account.P = "121211223212Anh";
-                    account.F = "IZEU TPFB DSNG 2YH6 3INL L7JJ NF56 LVYY";
+                   
                     ChromeDriver chrome = new ChromeDriver();
 
                     LoginMBasic.Login(chrome, account);
@@ -61,6 +64,11 @@ namespace CrawlGroupFb
         {
            
             
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
