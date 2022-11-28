@@ -68,7 +68,7 @@ namespace CrawlGroupFb
                     {
                         string e = element.Text;
                         var re = Regex.Match(e, "Công khai").Value;
-                        if (re == null)
+                        if (re == "")
                         {
                             continue;
                         }
@@ -85,7 +85,7 @@ namespace CrawlGroupFb
                         {
                             linkGroup = LinkPorts.Distinct().ToList();
                             File.AppendAllLines("idGroup.txt", linkGroup);
-                            MessageBox.Show("Hết nhóm");
+                            chrome.FindElement(By.XPath("//input[@name='query' and @autocomplete]")).Clear();
                             return new AuraeResult();
                         }
                     }

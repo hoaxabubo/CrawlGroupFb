@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -24,7 +25,8 @@ namespace CrawlGroupFb
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            int delay = Int32.Parse(textBoxDelay.Text);
+            string[] keyWords = richTextBox1.Lines.ToArray();
             new Thread(() =>
             {
                 try
@@ -36,7 +38,12 @@ namespace CrawlGroupFb
                     ChromeDriver chrome = new ChromeDriver();
 
                     LoginMBasic.Login(chrome, account);
-                    CrawlGroup.CrawlGroupData(chrome, textBoxKeyword.Text);
+                    foreach(string word in keyWords)
+                    {
+                        CrawlGroup.CrawlGroupData(chrome, word);
+                        Thread.Sleep(delay * 1000);
+                    }
+                   
                  
                     chrome.Close();
                 }
@@ -48,6 +55,12 @@ namespace CrawlGroupFb
                
             }).Start();
 
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+           
+            
         }
     }
 }
