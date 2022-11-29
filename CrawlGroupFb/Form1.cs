@@ -41,7 +41,7 @@ namespace CrawlGroupFb
                     foreach (string word in keyWords)
                     {
                         var cookie = cookies[randomLineNumber];
-                        LoginRequest.CheckLiveCookie(cookie,word);
+                        LoginRequest.CrawlIdGroup(cookie,word);
                         Thread.Sleep(delay * 60000);
                     }
                    

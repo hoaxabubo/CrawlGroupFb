@@ -16,7 +16,7 @@ namespace CrawlGroupFb
 {
     internal class LoginRequest
     {
-        public static bool CheckLiveCookie(string cookie, string keyWord)
+        public static bool CrawlIdGroup(string cookie, string keyWord)
         {
             try
             {
