@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -13,6 +14,7 @@ using AliceSeleniumHelper;
 using Aurae_Facebook_Care.BUS.Selenium;
 using CrawlGroupFb.Models;
 using OpenQA.Selenium.Chrome;
+using static System.Windows.Forms.LinkLabel;
 
 namespace CrawlGroupFb
 {
@@ -22,33 +24,29 @@ namespace CrawlGroupFb
         {
             InitializeComponent();
         }
-
+        Random rnd = new Random();
         private void button1_Click(object sender, EventArgs e)
         {
             int delay = Int32.Parse(textBoxDelay.Text);
             string[] keyWords = richTextBox1.Lines.ToArray();
-            Account account = new Account();
-            account.U = textBox1.Text;
-            account.P = textBox2.Text;
-            account.F = textBox3.Text;
-
+            string[] cookies = richTextBox2.Lines.ToArray();
+            var randomLineNumber = rnd.Next(0, cookies.Length - 1);
+          
 
             new Thread(() =>
             {
                 try
                 {
-                   
-                    ChromeDriver chrome = new ChromeDriver();
-
-                    LoginMBasic.Login(chrome, account);
-                    foreach(string word in keyWords)
+                  
+                    foreach (string word in keyWords)
                     {
-                        CrawlGroup.CrawlGroupData(chrome, word);
-                        Thread.Sleep(delay * 1000);
+                        var cookie = cookies[randomLineNumber];
+                        LoginRequest.CheckLiveCookie(cookie,word);
+                        Thread.Sleep(delay * 60000);
                     }
                    
                  
-                    chrome.Close();
+                   
                 }
                 catch 
                 {
@@ -67,6 +65,23 @@ namespace CrawlGroupFb
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Process.Start(new ProcessStartInfo { FileName = @"idGroup.txt", UseShellExecute = true });
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
         {
 
         }

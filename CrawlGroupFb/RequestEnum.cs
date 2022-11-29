@@ -1,0 +1,17 @@
+﻿public enum RequestEnum
+{
+    IS_LOGIN,
+    CAN_GET_LSD,
+    CAN_GET_JAZOEST,
+    CAN_GET_M_TS,
+    CAN_GET_LI,
+    LOGIN_2FA_FALSE,
+    LOGIN_2FA_SUCCESS,
+    UNKNOWN_ERROR,
+    SAI_PASS,
+    CAN_FIND_ACCOUNT,
+    CHECK_POINT,
+    LOGIN_SUCCESS,
+    CANT_GET_NH,
+    CANT_GET_FB_DTSG
+}
