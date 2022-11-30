@@ -42,7 +42,7 @@ namespace CrawlGroupFb
                     {
                         var cookie = cookies[randomLineNumber];
                         LoginRequest.CrawlIdGroup(cookie,word);
-                        Thread.Sleep(delay * 60000);
+                        //Thread.Sleep(delay * 60000);
                     }
                    
                  

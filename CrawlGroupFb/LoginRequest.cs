@@ -73,51 +73,59 @@ namespace CrawlGroupFb
                             string html = request.Get($"https://mbasic.facebook.com/search/groups/?q={keyWord}&source=filter&isTrending=0&paipv=0").ToString();
                             MatchCollection dataFulls = Regex.Matches(html, "ch\"><span>(.*?);is_inline");
                             List<string> list = new List<string>();
-                            foreach (var dataFull in dataFulls)
+
+                            try
                             {
-                                string status = Regex.Match(dataFull.ToString(), "<span>Nhóm (.*?)</span>").Groups[1].Value;
-
-
-                                if (status == "Riêng tư")
+                                foreach (var dataFull in dataFulls)
                                 {
-                                    continue;
+                                    string status = Regex.Match(dataFull.ToString(), "<span>Nhóm (.*?)</span>").Groups[1].Value;
 
-                                }
-                                string matches = Regex.Match(dataFull.ToString(), "group_id=(.*?)&amp").Groups[1].Value;
-                                list.Add(matches);
-                            }
-                            
-                            {
-                                //click Next
 
-                                for (int i = 2; i < 20; i++)
-                                {
-                                    string cursor = Regex.Match(html, "cursor=(.*?)&").Groups[1].Value;
-                                    string html2 = request.Get($"https://mbasic.facebook.com/graphsearch/str/hot/keywords_groups?f=AbrryWQ4ejlO5q5BaPM3xlyoxfsJiKuMsIqaftD7HTQmmxFFaSHGsUDkThCB5VxdK_IvP9Un-nDligk0RLvmBfhOMq3cbhX0uFLfjdAaJexpBvGYS1qh62rDTYzqPvK39hc&source=pivot&__xts__%5B0%5D=12.AboiCcaBQ0Hwc8FNfxNqAtJ3iIEAA70hUPt2CBYCNyrSPT2SfAofyuXwyU-2far_uUbzrezd9PsOmOJme00HSjoskA7g39zC4GQHevchYfhrNDX1Ly3OfnLMrY3TqdsOsq4cV6CIcXT2dSI_xbwDY5YvmPbDjGj28WrYL4Y9xJ_4XAxzFxmv3mBuA_Jq-kEa7YzWF3V8NIbalDkYuBNfJpc_Qw0SCW2ETa0UuyGHwxU56fxN6YPWdvmY2MvnBCTkyhZkOYMH0uiO9QKSCFC59NLVUVXMPkYRJLYRnVkyg4w-DPeE0h-b6m-7AXJOj0PvBTt1Eg5tfRcScIk5XNGmtrB9KPg6S53B1A0lohTYy4kGOGTO7Bv7T_i-l7Q0KbE3aaBxT0cMMk2QzQXKIWrNMODO5hzIwKC1g5JzF95uJ0zeig&paipv=0&eav=AfaS6n8bNNWEjKxus5CpQryRdu-v6NT4RHXve0IOHv7HtjqQAzv5hsYdRi_W7l2UO74&cursor={cursor}&pn={i}&usid=fb39c2532ae3fc5d4d4e4eb43fa21a82&tsid").ToString();
-                                    MatchCollection dataFulls2 = Regex.Matches(html, "ch\"><span>(.*?);is_inline");
-                                   
-                                    foreach (var dataFull2 in dataFulls2)
+                                    if (status == "Riêng tư")
                                     {
-                                        string status2 = Regex.Match(dataFull2.ToString(), "<span>Nhóm (.*?)</span>").Groups[1].Value;
+                                        continue;
 
+                                    }
+                                    string matches = Regex.Match(dataFull.ToString(), "group_id=(.*?)&amp").Groups[1].Value;
+                                    list.Add(matches);
+                                }
 
-                                        if (status2 == "Riêng tư")
+                                {
+                                    //click Next
+
+                                    for (int i = 2; i < 20; i++)
+                                    {
+                                        string cursor = Regex.Match(html, "see_more_pager\"><a href=\"(.*?)\"").Groups[1].Value;
+                                        string html2 = request.Get(cursor.Replace("amp;","")).ToString();
+                                        MatchCollection dataFulls2 = Regex.Matches(html, "ch\"><span>(.*?);is_inline");
+
+                                        foreach (var dataFull2 in dataFulls2)
                                         {
-                                            continue;
+                                            string status2 = Regex.Match(dataFull2.ToString(), "<span>Nhóm (.*?)</span>").Groups[1].Value;
 
+
+                                            if (status2 == "Riêng tư")
+                                            {
+                                                continue;
+
+                                            }
+                                            string matches2 = Regex.Match(dataFull2.ToString(), "group_id=(.*?)&amp").Groups[1].Value;
+                                            list.Add(matches2);
                                         }
-                                        string matches2 = Regex.Match(dataFull2.ToString(), "group_id=(.*?)&amp").Groups[1].Value;
-                                        list.Add(matches2);
+
+                                        string endPage = Regex.Match(html2, "Cuối kết quả tìm kiếm").Value;
+                                        if (!string.IsNullOrEmpty(endPage))
+                                        {
+                                            break;
+                                        }
                                     }
 
-                                    string endPage = Regex.Match(html2, "Cuối kết quả tìm kiếm").Value;
-                                    if (!string.IsNullOrEmpty(endPage))
-                                    {
-                                        break;
-                                    }
+
+
                                 }
-
-
+                            }
+                            catch(Exception ex)
+                            {
 
                             }
                             File.AppendAllLines("idGroup.txt", list);
