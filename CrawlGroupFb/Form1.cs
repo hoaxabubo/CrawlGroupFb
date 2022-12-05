@@ -60,8 +60,8 @@ namespace CrawlGroupFb
 
         private void Form1_Load(object sender, EventArgs e)
         {
-           
-            
+            richTextBox1.Text = Settings1.Default.key;
+            richTextBox2.Text = Settings1.Default.cookie;
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -84,6 +84,18 @@ namespace CrawlGroupFb
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void richTextBox1_TextChanged(object sender, EventArgs e)
+        {
+            Settings1.Default.key = richTextBox1.Text;
+            Settings1.Default.Save();
+        }
+
+        private void richTextBox2_TextChanged(object sender, EventArgs e)
+        {
+            Settings1.Default.cookie = richTextBox2.Text;
+            Settings1.Default.Save();
         }
     }
 }
