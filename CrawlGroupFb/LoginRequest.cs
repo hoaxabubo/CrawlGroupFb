@@ -97,7 +97,7 @@ namespace CrawlGroupFb
                                     {
                                         string cursor = Regex.Match(html, "see_more_pager\"><a href=\"(.*?)\"").Groups[1].Value;
                                         string html2 = request.Get(cursor.Replace("amp;","")).ToString();
-                                        MatchCollection dataFulls2 = Regex.Matches(html, "ch\"><span>(.*?);is_inline");
+                                        MatchCollection dataFulls2 = Regex.Matches(html2, "ch\"><span>(.*?);is_inline");
 
                                         foreach (var dataFull2 in dataFulls2)
                                         {
@@ -128,7 +128,7 @@ namespace CrawlGroupFb
                             {
 
                             }
-                            File.AppendAllLines("idGroup.txt", list);
+                            File.AppendAllLines("idGroup.txt",  list);
 
 
 

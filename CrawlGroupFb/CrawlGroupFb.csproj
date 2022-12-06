@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base64Helper.cs" />
+    <Compile Include="BUS\CheckLive.cs" />
     <Compile Include="CrawlGroup.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
